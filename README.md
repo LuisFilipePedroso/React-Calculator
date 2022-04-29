@@ -25,7 +25,8 @@ You can use the calculator just using your keyboard 🔥
 
 `ESC (Escape)` - Reset the calculator <br />
 `Enter` - Execute the operation <br />
-<br />
+`Backspace` - Will delete the last character of the visible number on the calculator screen. <br />
+
 `+` - Sum <br />
 `-` - Subtract <br />
 `*` - Multiply <br />
