@@ -151,6 +151,8 @@ const App: NextPage = () => {
   ), [calculate, calculatePercentage, changeNumberSign, onClickSignal, signal])
 
   const onKeyDown = useCallback((e: KeyboardEvent) => {
+
+    console.log(e.key)
     if (e.key === 'Enter') {
       calculate[signal]();
       return;
@@ -159,6 +161,16 @@ const App: NextPage = () => {
     if (e.key === 'Escape') {
       reset();
       return;
+    }
+
+    if (e.key === 'Backspace') {
+      setCurrentNumber(prevState => {
+        if (prevState.length > 1) {
+          return prevState.slice(0, -1);
+        }
+
+        return `0`
+      })
     }
 
     const isValidKey = keys.find(key => key.label === e.key);
