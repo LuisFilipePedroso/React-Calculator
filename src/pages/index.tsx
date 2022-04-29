@@ -151,8 +151,6 @@ const App: NextPage = () => {
   ), [calculate, calculatePercentage, changeNumberSign, onClickSignal, signal])
 
   const onKeyDown = useCallback((e: KeyboardEvent) => {
-
-    console.log(e.key)
     if (e.key === 'Enter') {
       calculate[signal]();
       return;
