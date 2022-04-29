@@ -1,6 +1,6 @@
 import { Box, Flex, Grid, Text } from '@chakra-ui/react';
 import type { NextPage } from 'next';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Key from '../components/Key';
 import AppColors from '../styles/AppColors';
 
@@ -56,93 +56,128 @@ const App: NextPage = () => {
   const calculate: CalculateType = useMemo(() => ({
     '+': () => setCurrentNumber(`${Number(prevNumber) + Number(currentNumber)}`),
     '-': () => setCurrentNumber(`${Number(prevNumber) - Number(currentNumber)}`),
-    'X': () => setCurrentNumber(`${Number(prevNumber) * Number(currentNumber)}`),
+    '*': () => setCurrentNumber(`${Number(prevNumber) * Number(currentNumber)}`),
     '/': () => setCurrentNumber(`${Number(prevNumber) / Number(currentNumber)}`),
     '%': () => setCurrentNumber(`${Number(prevNumber) / Number(currentNumber)}`),
     '': () => null
   }), [currentNumber, prevNumber]);
 
-  const keys = [
-    {
-      label: 'AC',
-      variant: 'secondary',
-      onClick: reset
-    },
-    {
-      label: '+/-',
-      onClick: changeNumberSign
-    },
-    {
-      label: '%',
-      onClick: calculatePercentage
-    },
-    {
-      label: '/',
-      onClick: onClickSignal
-    },
-    {
-      label: '7',
-      onClick: onClickNumberKey
-    },
-    {
-      label: '8',
-      onClick: onClickNumberKey
-    },
-    {
-      label: '9',
-      onClick: onClickNumberKey
-    },
-    {
-      label: 'X',
-      onClick: onClickSignal
-    },
-    {
-      label: '4',
-      onClick: onClickNumberKey
-    },
-    {
-      label: '5',
-      onClick: onClickNumberKey
-    },
-    {
-      label: '6',
-      onClick: onClickNumberKey
-    },
-    {
-      label: '-',
-      onClick: onClickSignal
-    },
-    {
-      label: '1',
-      onClick: onClickNumberKey
-    },
-    {
-      label: '2',
-      onClick: onClickNumberKey
-    },
-    {
-      label: '3',
-      onClick: onClickNumberKey
-    },
-    {
-      label: '+',
-      onClick: onClickSignal
-    },
-    {
-      label: '0',
-      onClick: onClickNumberKey,
-      gridColumnStart: 1,
-      gridColumnEnd: 3,
-    },
-    {
-      label: '.',
-      onClick: onClickNumberKey,
-    },
-    {
-      label: '=',
-      variant: 'secondary',
-      onClick: () => calculate[signal]()
-    }]
+  const keys = useMemo(() => (
+    [
+      {
+        label: 'AC',
+        variant: 'secondary',
+        onClick: reset
+      },
+      {
+        label: '+/-',
+        onClick: changeNumberSign
+      },
+      {
+        label: '%',
+        onClick: calculatePercentage
+      },
+      {
+        label: '/',
+        onClick: onClickSignal,
+        signal: true,
+      },
+      {
+        label: '7',
+        onClick: onClickNumberKey
+      },
+      {
+        label: '8',
+        onClick: onClickNumberKey
+      },
+      {
+        label: '9',
+        onClick: onClickNumberKey
+      },
+      {
+        label: '*',
+        onClick: onClickSignal,
+        signal: true,
+      },
+      {
+        label: '4',
+        onClick: onClickNumberKey
+      },
+      {
+        label: '5',
+        onClick: onClickNumberKey
+      },
+      {
+        label: '6',
+        onClick: onClickNumberKey
+      },
+      {
+        label: '-',
+        onClick: onClickSignal,
+        signal: true
+      },
+      {
+        label: '1',
+        onClick: onClickNumberKey
+      },
+      {
+        label: '2',
+        onClick: onClickNumberKey
+      },
+      {
+        label: '3',
+        onClick: onClickNumberKey
+      },
+      {
+        label: '+',
+        onClick: onClickSignal,
+        signal: true
+      },
+      {
+        label: '0',
+        onClick: onClickNumberKey,
+        gridColumnStart: 1,
+        gridColumnEnd: 3,
+      },
+      {
+        label: '.',
+        onClick: onClickNumberKey,
+      },
+      {
+        label: '=',
+        variant: 'secondary',
+        onClick: () => calculate[signal]()
+      }]
+  ), [calculate, calculatePercentage, changeNumberSign, onClickSignal, signal])
+
+  const onKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      calculate[signal]();
+      return;
+    }
+
+    if (e.key === 'Escape') {
+      reset();
+      return;
+    }
+
+    const isValidKey = keys.find(key => key.label === e.key);
+    if (isValidKey) {
+      if (isValidKey.signal) {
+        onClickSignal(e.key)
+
+        return;
+      }
+
+      onClickNumberKey(e.key);
+    }
+  }, [calculate, keys, onClickSignal, signal])
+
+  useEffect(() => {
+    document.addEventListener('keydown', onKeyDown)
+
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [onKeyDown])
 
   return (
     <Flex
