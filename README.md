@@ -19,7 +19,7 @@ Then, to run the project, execute:
 
 `yarn dev`
 
-## Using online
+## Testing the project
 
 You don't need to run locally to see the project in action, just access: 
 https://react-calculator-sable.vercel.app/
