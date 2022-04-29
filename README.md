@@ -23,13 +23,13 @@ Then, to run the project, execute:
 
 You can use the calculator just using your keyboard 🔥
 
-`ESC (Escape)` - Reset the calculator
-`Enter` - Execute the operation
-
-`+` - Sum
-`-` - Subtract
-`*` - Multiply
-`/` - Divide
+`ESC (Escape)` - Reset the calculator <br />
+`Enter` - Execute the operation <br />
+<br />
+`+` - Sum <br />
+`-` - Subtract <br />
+`*` - Multiply <br />
+`/` - Divide <br />
 
 That's it, simple, huh?
 
