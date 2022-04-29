@@ -8,9 +8,6 @@ type CalculateType = {
   [key: string]: () => void;
 }
 
-//Horario de inicio: 19:30
-//Horario de inicio: 07:45
-
 const App: NextPage = () => {
   const [currentNumber, setCurrentNumber] = useState('0');
   const [prevNumber, setPrevNumber] = useState('');
