@@ -19,7 +19,11 @@ Then, to run the project, execute:
 
 `yarn dev`
 
-## Key mapping
+## Using the Calculator
+
+You can use the calculator via mouse or keyboard
+
+### Keyboard - Key mapping
 
 You can use the calculator just using your keyboard 🔥
 
