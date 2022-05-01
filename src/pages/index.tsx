@@ -1,7 +1,8 @@
 import { Box, Flex, Grid, Text } from '@chakra-ui/react';
 import type { NextPage } from 'next';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import Key from '../components/Key';
+import useKeyDown from '../hooks/useKeyDown';
 import AppColors from '../styles/AppColors';
 
 type CalculateType = {
@@ -183,11 +184,7 @@ const App: NextPage = () => {
     }
   }, [calculate, keys, onClickSignal, signal])
 
-  useEffect(() => {
-    document.addEventListener('keydown', onKeyDown)
-
-    return () => document.removeEventListener('keydown', onKeyDown)
-  }, [onKeyDown])
+  useKeyDown({ handler: onKeyDown });
 
   return (
     <Flex
