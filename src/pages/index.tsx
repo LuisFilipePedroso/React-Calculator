@@ -147,12 +147,11 @@ const App: NextPage = () => {
       {
         label: '=',
         variant: 'secondary',
-        onClick: () => calculate[signal]()
+        onClick: () => signal && calculate[signal]()
       }]
   ), [calculate, calculatePercentage, changeNumberSign, onClickSignal, signal])
 
   const onKeyDown = useCallback((e: KeyboardEvent) => {
-    console.log(e.key);
     if (e.key === 'Enter') {
       calculate[signal]();
       return;
@@ -212,7 +211,8 @@ const App: NextPage = () => {
             marginBottom="8px"
             textOverflow="ellipsis"
             overflow="hidden"
-            whiteSpace="nowrap">
+            whiteSpace="nowrap"
+            data-testid="screen">
             {currentNumber}
           </Text>
         </Flex>
@@ -224,7 +224,8 @@ const App: NextPage = () => {
                 variant={key.variant}
                 gridColumnStart={key.gridColumnStart}
                 gridColumnEnd={key.gridColumnEnd}
-                onClick={key.onClick}>
+                onClick={key.onClick}
+                data-testid={key.label}>
                 {key.label}
               </Key>
             ))}
