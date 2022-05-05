@@ -16,7 +16,7 @@ const Key = ({ children, variant = 'primary', onClick, ...rest }: Props & Omit<B
       fontSize="18px"
       marginTop="16px"
       backgroundColor={bgColor}
-      onClick={e => onClick && onClick(e.currentTarget.innerText)}
+      onClick={() => onClick && onClick(children)}
       _hover={{ backgroundColor: hoverBgColor }}
       _active={{ backgroundColor: bgColor }}
       {...rest}>
