@@ -172,6 +172,11 @@ const App: NextPage = () => {
       })
     }
 
+    if (e.key === '%') {
+      calculatePercentage();
+      return;
+    }
+
     const isValidKey = keys.find(key => key.label === e.key);
     if (isValidKey) {
       if (isValidKey.signal) {
@@ -182,7 +187,7 @@ const App: NextPage = () => {
 
       onClickNumberKey(e.key);
     }
-  }, [calculate, keys, onClickSignal, signal])
+  }, [calculate, calculatePercentage, keys, onClickSignal, signal])
 
   useKeyDown({ handler: onKeyDown });
 
