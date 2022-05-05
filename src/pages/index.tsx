@@ -1,8 +1,7 @@
-import { Box, Flex, Grid, Text } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import { useCallback, useMemo, useState } from 'react';
-import Key from '../components/Key';
-import useKeyDown from '../hooks/useKeyDown';
+import KeyPanel from '../components/KeyPanel';
 import AppColors from '../styles/AppColors';
 
 type CalculateType = {
@@ -54,6 +53,16 @@ const App: NextPage = () => {
     setSignal('');
   }
 
+  const onPressBackSpace = () => {
+    setCurrentNumber(prevState => {
+      if (prevState.length > 1) {
+        return prevState.slice(0, -1);
+      }
+
+      return `0`
+    });
+  }
+
   const calculate: CalculateType = useMemo(() => ({
     '+': () => setCurrentNumber(`${Number(prevNumber) + Number(currentNumber)}`),
     '-': () => setCurrentNumber(`${Number(prevNumber) - Number(currentNumber)}`),
@@ -62,134 +71,6 @@ const App: NextPage = () => {
     '%': () => setCurrentNumber(`${Number(prevNumber) / Number(currentNumber)}`),
     '': () => null
   }), [currentNumber, prevNumber]);
-
-  const keys = useMemo(() => (
-    [
-      {
-        label: 'AC',
-        variant: 'secondary',
-        onClick: reset
-      },
-      {
-        label: '+/-',
-        onClick: changeNumberSign
-      },
-      {
-        label: '%',
-        onClick: calculatePercentage
-      },
-      {
-        label: '/',
-        onClick: onClickSignal,
-        signal: true,
-      },
-      {
-        label: '7',
-        onClick: onClickNumberKey
-      },
-      {
-        label: '8',
-        onClick: onClickNumberKey
-      },
-      {
-        label: '9',
-        onClick: onClickNumberKey
-      },
-      {
-        label: '*',
-        onClick: onClickSignal,
-        signal: true,
-      },
-      {
-        label: '4',
-        onClick: onClickNumberKey
-      },
-      {
-        label: '5',
-        onClick: onClickNumberKey
-      },
-      {
-        label: '6',
-        onClick: onClickNumberKey
-      },
-      {
-        label: '-',
-        onClick: onClickSignal,
-        signal: true
-      },
-      {
-        label: '1',
-        onClick: onClickNumberKey
-      },
-      {
-        label: '2',
-        onClick: onClickNumberKey
-      },
-      {
-        label: '3',
-        onClick: onClickNumberKey
-      },
-      {
-        label: '+',
-        onClick: onClickSignal,
-        signal: true
-      },
-      {
-        label: '0',
-        onClick: onClickNumberKey,
-        gridColumnStart: 1,
-        gridColumnEnd: 3,
-      },
-      {
-        label: '.',
-        onClick: onClickNumberKey,
-      },
-      {
-        label: '=',
-        variant: 'secondary',
-        onClick: () => signal && calculate[signal]()
-      }]
-  ), [calculate, calculatePercentage, changeNumberSign, onClickSignal, signal])
-
-  const onKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      calculate[signal]();
-      return;
-    }
-
-    if (e.key === 'Escape') {
-      reset();
-      return;
-    }
-
-    if (e.key === 'Backspace') {
-      setCurrentNumber(prevState => {
-        if (prevState.length > 1) {
-          return prevState.slice(0, -1);
-        }
-
-        return `0`
-      })
-    }
-
-    if (e.key === '%') {
-      calculatePercentage();
-      return;
-    }
-
-    const isValidKey = keys.find(key => key.label === e.key);
-    if (isValidKey) {
-      if (isValidKey.signal) {
-        onClickSignal(e.key)
-
-        return;
-      }
-
-      onClickNumberKey(e.key);
-    }
-  }, [calculate, calculatePercentage, keys, onClickSignal, signal])
-
-  useKeyDown({ handler: onKeyDown });
 
   return (
     <Flex
@@ -222,19 +103,14 @@ const App: NextPage = () => {
           </Text>
         </Flex>
         <Box marginTop="16px">
-          <Grid gap="16px" gridTemplateColumns="repeat(4, 1fr)" gridTemplateRows="repeat(5, 1fr)">
-            {keys.map(key => (
-              <Key
-                key={key.label}
-                variant={key.variant}
-                gridColumnStart={key.gridColumnStart}
-                gridColumnEnd={key.gridColumnEnd}
-                onClick={key.onClick}
-                data-testid={key.label}>
-                {key.label}
-              </Key>
-            ))}
-          </Grid>
+          <KeyPanel
+            reset={reset}
+            changeNumberSign={changeNumberSign}
+            calculatePercentage={calculatePercentage}
+            onClickSignal={onClickSignal}
+            onClickNumberKey={onClickNumberKey}
+            onPressBackSpace={onPressBackSpace}
+            calculate={() => signal && calculate[signal]()} />
         </Box>
       </Box>
     </Flex>
