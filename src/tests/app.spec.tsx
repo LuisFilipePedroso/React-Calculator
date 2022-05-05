@@ -1,5 +1,5 @@
 import { cleanup, fireEvent, render } from '@testing-library/react';
-import App from '.';
+import App from '../pages';
 
 describe('Calculator behavior', () => {
   afterEach(cleanup);
@@ -88,7 +88,7 @@ describe('Calculator behavior', () => {
   });
 
   it('should be able to sum by keydown', () => {
-    const { debug, getByTestId, container } = render(
+    const { getByTestId, container } = render(
       <App />
     )
 
@@ -102,7 +102,7 @@ describe('Calculator behavior', () => {
   });
 
   it('should be able to subtract by keydown', () => {
-    const { debug, getByTestId, container } = render(
+    const { getByTestId, container } = render(
       <App />
     )
 
@@ -116,7 +116,7 @@ describe('Calculator behavior', () => {
   });
 
   it('should be able to multiply by keydown', () => {
-    const { debug, getByTestId, container } = render(
+    const { getByTestId, container } = render(
       <App />
     )
 
@@ -130,7 +130,7 @@ describe('Calculator behavior', () => {
   });
 
   it('should be able to divide by keydown', () => {
-    const { debug, getByTestId, container } = render(
+    const { getByTestId, container } = render(
       <App />
     )
 
@@ -144,7 +144,7 @@ describe('Calculator behavior', () => {
   });
 
   it('should be able to calculate percentage by keydown', () => {
-    const { debug, getByTestId, container } = render(
+    const { getByTestId, container } = render(
       <App />
     )
 
