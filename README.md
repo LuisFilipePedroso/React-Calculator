@@ -35,6 +35,7 @@ You can use the calculator just using your keyboard 🔥
 `-` - Subtract <br />
 `*` - Multiply <br />
 `/` - Divide <br />
+`%` - Percentage <br />
 
 That's it, simple, huh?
 
