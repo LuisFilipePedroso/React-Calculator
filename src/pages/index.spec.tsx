@@ -142,4 +142,16 @@ describe('Calculator behavior', () => {
     const screen = getByTestId('screen');
     expect(screen).toHaveTextContent('0.5');
   });
+
+  it('should be able to calculate percentage by keydown', () => {
+    const { debug, getByTestId, container } = render(
+      <App />
+    )
+
+    fireEvent.keyDown(container, { key: '2', code: '2' });
+    fireEvent.keyDown(container, { key: '%', code: '%' });
+
+    const screen = getByTestId('screen');
+    expect(screen).toHaveTextContent('0.02');
+  });
 });
