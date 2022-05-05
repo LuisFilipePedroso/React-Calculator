@@ -1,10 +1,18 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import App from '.';
 
-test('Home renders correctly', () => {
-  const { debug } = render(
-    <App />
-  )
+describe('Calculator behavior', () => {
+  it('should sum two numbers', () => {
+    const { debug, getByText, getByTestId, container } = render(
+      <App />
+    )
 
-  debug();
-})
+    fireEvent.click(getByText('1'), new MouseEvent('click'));
+    fireEvent.click(getByText('+'), new MouseEvent('click'));
+    fireEvent.click(getByText('2'), new MouseEvent('click'));
+    fireEvent.click(getByText('='), new MouseEvent('click'));
+
+    const screen = getByTestId('screen');
+    expect(screen).toHaveTextContent('3');
+  });
+});
