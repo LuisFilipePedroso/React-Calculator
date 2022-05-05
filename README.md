@@ -4,10 +4,10 @@ A simple project that can be useful for you to calculate simple math operations
 
 ## Tech Stack
 
-ReactJS
-NextJS
-Typescript
-ChrakraUI
+- ReactJS
+- NextJS
+- Typescript
+- ChrakraUI
 
 ## Running the Project locally
 
