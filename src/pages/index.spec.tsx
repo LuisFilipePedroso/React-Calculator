@@ -86,4 +86,18 @@ describe('Calculator behavior', () => {
     const screen = getByTestId('screen');
     expect(screen).toHaveTextContent('0');
   });
+
+  it('should be able to sum by keydown', () => {
+    const { debug, getByTestId, container } = render(
+      <App />
+    )
+
+    fireEvent.keyDown(container, { key: '1', code: '1' });
+    fireEvent.keyDown(container, { key: '+', code: '+' });
+    fireEvent.keyDown(container, { key: '2', code: '2' });
+    fireEvent.keyDown(container, { key: 'Enter', code: 'Enter' });
+
+    const screen = getByTestId('screen');
+    expect(screen).toHaveTextContent('3');
+  });
 });
